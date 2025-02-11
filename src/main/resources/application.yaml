@@ -1,0 +1,41 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health
+  endpoint:
+    health:
+      enabled: true
+
+spring:
+  application:
+    name: petstore-sample
+  datasource:
+    url: jdbc:h2:file:~/.db/${spring.application.name};DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
+    username: sa
+    password: sa
+  jpa:
+    generate-ddl: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: false
+
+
+doc:
+  api:
+    version: 1.0
+    title: ${spring.application.name}
+    description: Tienda de mascotas
+    contact:
+      name: Zutun.io
+      email: tech@zutun.io
+      url: https://developer.zutun.io
