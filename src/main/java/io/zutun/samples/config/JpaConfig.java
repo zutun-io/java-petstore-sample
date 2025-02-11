@@ -20,7 +20,7 @@ import static java.time.ZoneOffset.UTC;
 @EnableJpaRepositories(
         basePackages = {
                 "io.zutun.samples.domain",
-                "io.zutun.samples.adapter.out.persistence"
+                "io.zutun.samples.service"
         }
 )
 @EnableJpaAuditing(

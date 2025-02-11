@@ -1,4 +1,4 @@
-package io.zutun.samples.adapter.out.persistence;
+package io.zutun.samples.service;
 
 import io.zutun.samples.domain.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;
