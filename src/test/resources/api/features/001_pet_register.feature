@@ -5,6 +5,8 @@ Característica: Registro de mascotas
 
   Escenario: Registrar un nuevo perro
 
+  Escenario: Registrar un gato con un nombre ya existente
+
   Escenario: Registrar un nuevo perro con los campos requeridos
 
   Escenario: Registrar un gato con todos los campos (requeridos y opcionales)
