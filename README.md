@@ -70,4 +70,132 @@ Antes de ejecutar las pruebas de integración, asegúrese de que el proyecto est
 mvn clean verify
 ```
 
+## Generando pruebas de integración
+
+### El prompt
+
+Eres un experto en pruebas de integración usando Cucumber y OpenAPI. 
+Te proporcionaré dos elementos:
+
+1. Una especificación OpenAPI que describe el endpoint a probar
+2. Un archivo .feature de Cucumber con los escenarios de prueba
+
+Tu tarea es:
+1. Analizar la especificación OpenAPI para entender:
+   - Los endpoints disponibles
+   - Los métodos HTTP soportados
+   - Los parámetros requeridos
+   - Los schemas de request/response
+   - Los códigos de respuesta esperados
+
+2. Analizar los escenarios Cucumber para entender:
+   - Los casos de prueba definidos
+   - Los pasos Given/When/Then
+   - Las precondiciones necesarias
+   - Las validaciones requeridas
+
+3. Modificar el archivo .feature de la siguiente manera:
+    - Incluir el payload y/o los query params requeridos por el endpoint
+    - Incluir, de ser necesario, las cabeceras requeridas por el endpoint
+    - Agregar los casos de validación requeridos. Por ejemplo: status code, schema de response, etc.
+
+Toma en cuenta las siguiente consideraciones:
+
+1. El archivo .feature original, sólo incluirá una lista de escenarios de pruebas.
+
+Ejemplo:
+
+
+```gherkin
+Característica: Registro de mascotas
+
+Escenario: Registrar una nueva mascota de una especie válida
+
+Escenario: Registrar una nueva mascota de una especie no válida
+
+Escenario: Registrar una nueva mascota con un nombre muy largo
+
+Escenario: Registrar una nueva mascota con una edad negativa
+```
+
+2. El nombre de la acción `Cuando/When` se basará en el `summary` de la operación descrita en la especificación, y deber ser en tercera persona y con la forma impersonal.
+
+Ejemplo:
+
+- Summary de la operación: `Registrar nueva mascota`
+- Nombre de la acción: `Cuando Se registra una nueva mascota`
+
+
+3. Los payloads en formato JSON deben ser agregados usando la triple commillas. Ejemplo:
+
+```gherkin
+Característica: Registro de mascotas
+
+    Escenario: Registrar una nueva mascota de una especie válida
+        Cuando Se registra una nueva mascota
+        """
+        {
+            "name": "Blacky",
+            "species": "CAT",
+            "breed": "Cat",
+            "color": "Black",
+            "age": 2.5
+        }
+        """
+```
+
+4. Los headers se especificarán de en formato tabla. Ejemplo:
+
+```gherkin
+Dado que se tienen los siguientes headers
+
+| Header | Value |
+|--------|-------|
+| Content-Type | application/json |
+```
+
+5. Los query params se especificarán de en formato tabla. Ejemplo:
+
+```gherkin
+| Query param | Value |
+|-------------|-------|
+| pageSize | 10 |
+```
+
+6. Se deberá agregar siempre una validación del estado de respuesta. Ejemplo:
+
+```gherkin
+    Entonces El código de respuesta debe ser 201
+```
+
+7. Validar la existencia de los campos especificados en el response del endpoint. Ejemplo:
+
+```gherkin
+    Y El response debe contener un campo 'id' con formato UUID
+```
+
+8. Para los casos de error, tipo 4xx o 5xx, se deberá agregar una validación del mensaje de error. Ejemplo:
+
+```gherkin
+    Y El mensaje de error debe indicar que la especie no es válida
+```
+
+Finalmente, cada escenario quedaría de la siguiente manera:
+
+```gherkin
+Escenario: Registrar una nueva mascota de una especie válida
+        Cuando Se registra una nueva mascota
+        """
+        {
+            "name": "Blacky",
+            "species": "CAT",
+            "breed": "Cat",
+            "color": "Black",
+            "age": 2.5
+        }
+        """
+        Entonces El código de respuesta debe ser 201
+        Y El response debe contener un campo 'id' con formato UUID
+```
+
 
