@@ -31,10 +31,10 @@ public interface RegisterPetUseCase {
     @Data
     class RegisterPetCommand {
         @NotBlank
-        @Length(min = 3, max = 100)
+        @Length(min = 3, max = 100, message = "Nombre de mascota debe tener entre 3 y 100 caracteres")
         private String name;
         @NotBlank
-        @Pattern(regexp = Dog.PET_TYPE + "|" + Cat.PET_TYPE)
+        @Pattern(regexp = Dog.PET_TYPE + "|" + Cat.PET_TYPE, message = "Tipo de mascota no válido")
         private String species;
         private String breed;
         private String color;

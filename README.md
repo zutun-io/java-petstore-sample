@@ -174,12 +174,6 @@ Dado que se tienen los siguientes headers
     Y El response debe contener un campo 'id' con formato UUID
 ```
 
-8. Para los casos de error, tipo 4xx o 5xx, se deberá agregar una validación del mensaje de error. Ejemplo:
-
-```gherkin
-    Y El mensaje de error debe indicar que la especie no es válida
-```
-
 Finalmente, cada escenario quedaría de la siguiente manera:
 
 ```gherkin
