@@ -1,0 +1,24 @@
+package io.zutun.samples.service;
+
+import io.zutun.samples.domain.Pet;
+import io.zutun.samples.usecases.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+public class PetsSearchService {
+
+    private final PetsRepository petRepository;
+
+    public PetResponse getPetById(UUID petId) {
+        Pet pet = petRepository.findById(petId)
+                .orElseThrow(() -> new PetNotFoundException("Pet not found with ID: " + petId));
+        return new PetResponse(pet.getId(), pet.getName(), pet.getBreed(), pet.getColor());
+    }
+
+    public record PetResponse(UUID id, String name, String breed, String color) {
+    }
+}
