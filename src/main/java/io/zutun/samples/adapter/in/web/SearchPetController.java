@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.zutun.samples.adapter.in.web.response.PaginatedResponse;
 import io.zutun.samples.domain.Pet;
 import io.zutun.samples.usecases.SearchPetUseCase;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 
 @Tag(name = "Pets", description = "Pets search operations")
@@ -52,7 +53,7 @@ public class SearchPetController {
     @GetMapping
     public ResponseEntity<PaginatedResponse<Pet>> findByAttributes(
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) Integer age,
+            @RequestParam(required = false) @Min(0) Integer age,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
 
@@ -74,7 +75,9 @@ public class SearchPetController {
             }
             default -> pets = searchPetUseCase.findAll(page, size);
         }
-        return ResponseEntity.ok(pets);
+        if(pets.getContent().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else return new ResponseEntity<>(pets, HttpStatus.OK);
     }
 
     private static LocalDate calculateBirthdate(int age) {
