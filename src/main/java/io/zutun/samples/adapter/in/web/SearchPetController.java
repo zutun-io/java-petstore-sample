@@ -48,7 +48,7 @@ public class SearchPetController {
             description = "Find pet by name and/or age",
             tags = {"Pets"}
     )
-    @Tag(name = "Pets", description = "Find pet by Id")
+    @Tag(name = "Pets", description = "Find pet by name and/or age")
     @GetMapping
     public ResponseEntity<PaginatedResponse<Pet>> findByAttributes(
             @RequestParam(required = false) String name,
