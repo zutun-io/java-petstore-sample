@@ -54,7 +54,7 @@ public class SearchPetController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Integer age,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int pagesize) {
+            @RequestParam(defaultValue = "5") int size) {
 
         PaginatedResponse<Pet> pets;
         PetData petData = new PetData(name, age);
@@ -62,17 +62,17 @@ public class SearchPetController {
         switch(petData) {
             case PetData p when p.name() != null && p.age() != null -> {
                 System.out.println("Buscar por nombre y fnac: " + p.name() + " " + calculateBirthdate(p.age()));
-                pets = searchPetUseCase.findByNameAndBirthDate(p.name(), calculateBirthdate(p.age()), page, pagesize);
+                pets = searchPetUseCase.findByNameAndBirthDate(p.name(), calculateBirthdate(p.age()), page, size);
             }
             case PetData p when p.name() != null -> {
                 System.out.println("Buscar por nombre: " + p.name());
-                pets = searchPetUseCase.findByName(p.name(), page, pagesize);
+                pets = searchPetUseCase.findByName(p.name(), page, size);
             }
             case PetData p when p.age() != null -> {
                 System.out.println("Buscar por fnac: " + calculateBirthdate(p.age()));
-                pets = searchPetUseCase.findByBirthDate(calculateBirthdate(p.age()), page, pagesize);
+                pets = searchPetUseCase.findByBirthDate(calculateBirthdate(p.age()), page, size);
             }
-            default -> pets = searchPetUseCase.findAll(page, pagesize);
+            default -> pets = searchPetUseCase.findAll(page, size);
         }
         return ResponseEntity.ok(pets);
     }

@@ -24,28 +24,28 @@ public class PetSearchService implements SearchPetUseCase {
         return repository.findById(id);
     }
 
-    public PaginatedResponse<Pet> findAll(int page, int pagesize) {
-        Pageable pageable = PageRequest.of(page, pagesize);
+    public PaginatedResponse<Pet> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
         Page<Pet> result = repository.findAll(pageable);
-        return new PaginatedResponse<>(result.getContent(), page, pagesize, result.getTotalElements(), result.getTotalPages());
+        return new PaginatedResponse<>(result.getContent(), page, size, result.getTotalElements(), result.getTotalPages());
     }
 
-    public PaginatedResponse<Pet> findByName(String name, int page, int pagesize) {
-        Pageable pageable = PageRequest.of(page, pagesize);
+    public PaginatedResponse<Pet> findByName(String name, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
         Page<Pet> result = repository.findByNameIgnoreCase(name, pageable);
-        return new PaginatedResponse<>(result.getContent(), page, pagesize, result.getTotalElements(), result.getTotalPages());
+        return new PaginatedResponse<>(result.getContent(), page, size, result.getTotalElements(), result.getTotalPages());
     }
 
-    public PaginatedResponse<Pet> findByBirthDate(LocalDate birthDate, int page, int pagesize) {
-        Pageable pageable = PageRequest.of(page, pagesize);
+    public PaginatedResponse<Pet> findByBirthDate(LocalDate birthDate, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
         Page<Pet> result = repository.findByBirthDate(birthDate, pageable);
-        return new PaginatedResponse<>(result.getContent(), page, pagesize, result.getTotalElements(), result.getTotalPages());
+        return new PaginatedResponse<>(result.getContent(), page, size, result.getTotalElements(), result.getTotalPages());
     }
     
-    public PaginatedResponse<Pet> findByNameAndBirthDate(String name, LocalDate birthDate, int page, int pagesize) {
-        Pageable pageable = PageRequest.of(page, pagesize);
+    public PaginatedResponse<Pet> findByNameAndBirthDate(String name, LocalDate birthDate, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
         Page<Pet> result = repository.findByNameIgnoreCaseAndBirthDate(name, birthDate, pageable);
-        return new PaginatedResponse<>(result.getContent(), page, pagesize, result.getTotalElements(), result.getTotalPages());
+        return new PaginatedResponse<>(result.getContent(), page, size, result.getTotalElements(), result.getTotalPages());
     } 
 }
 
