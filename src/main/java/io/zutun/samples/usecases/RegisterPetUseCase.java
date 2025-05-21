@@ -4,11 +4,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.zutun.samples.domain.Cat;
 import io.zutun.samples.domain.Dog;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public interface RegisterPetUseCase {
@@ -24,7 +25,7 @@ public interface RegisterPetUseCase {
                       "name": "Blacky",
                       "breed": "Cat",
                       "color": "Black",
-                      "age": 2.5
+                      "birthDate": "2022-06-17"
                     }
                     """
     )
@@ -38,7 +39,7 @@ public interface RegisterPetUseCase {
         private String species;
         private String breed;
         private String color;
-        @Positive
-        private int age;
+        @Past
+        private LocalDate birthDate;
     }
 }

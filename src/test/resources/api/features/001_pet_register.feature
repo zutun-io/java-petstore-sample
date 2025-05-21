@@ -1,11 +1,11 @@
-# language: es
-Característica: Registro de mascotas
+# language: en
+Feature: Pet Registration
 
-  Escenario: Registrar un nuevo gato
-    Dado que se tienen los siguientes headers
+  Scenario: Register a new cat
+    Given the following headers
       | Header        | Value              |
       | Content-Type  | application/json   |
-    Cuando Se registra una nueva mascota
+    When a new pet is registered
     """
     {
       "name": "Misty",
@@ -15,14 +15,14 @@ Característica: Registro de mascotas
       "age": 3
     }
     """
-    Entonces El código de respuesta debe ser 201
-    Y El response debe contener un campo 'id' con formato UUID
+    Then the response code should be 201
+    And the response should contain a field 'id' with UUID format
 
-  Escenario: Registrar un nuevo perro
-    Dado que se tienen los siguientes headers
+  Scenario: Register a new dog
+    Given the following headers
       | Header        | Value              |
       | Content-Type  | application/json   |
-    Cuando Se registra una nueva mascota
+    When a new pet is registered
     """
     {
       "name": "Buddy",
@@ -32,14 +32,14 @@ Característica: Registro de mascotas
       "age": 5
     }
     """
-    Entonces El código de respuesta debe ser 201
-    Y El response debe contener un campo 'id' con formato UUID
+    Then the response code should be 201
+    And the response should contain a field 'id' with UUID format
 
-  Escenario: Registrar un gato con un nombre ya existente
-    Dado que se tienen los siguientes headers
+  Scenario: Register a cat with an existing name
+    Given the following headers
       | Header        | Value              |
       | Content-Type  | application/json   |
-    Cuando Se registra una nueva mascota
+    When a new pet is registered
     """
     {
       "name": "Misty",
@@ -49,13 +49,13 @@ Característica: Registro de mascotas
       "age": 2
     }
     """
-    Entonces El código de respuesta debe ser 409
+    Then the response code should be 409
 
-  Escenario: Registrar un nuevo perro solo con los campos requeridos
-    Dado que se tienen los siguientes headers
+  Scenario: Register a new dog with only required fields
+    Given the following headers
       | Header        | Value              |
       | Content-Type  | application/json   |
-    Cuando Se registra una nueva mascota
+    When a new pet is registered
     """
     {
       "name": "Rex",
@@ -64,14 +64,14 @@ Característica: Registro de mascotas
       "age": 4
     }
     """
-    Entonces El código de respuesta debe ser 201
-    Y El response debe contener un campo 'id' con formato UUID
+    Then the response code should be 201
+    And the response should contain a field 'id' with UUID format
 
-  Escenario: Registrar un gato con todos los campos (requeridos y opcionales)
-    Dado que se tienen los siguientes headers
+  Scenario: Register a cat with all fields (required and optional)
+    Given the following headers
       | Header        | Value              |
       | Content-Type  | application/json   |
-    Cuando Se registra una nueva mascota
+    When a new pet is registered
     """
     {
       "name": "Whiskers",
@@ -81,27 +81,27 @@ Característica: Registro de mascotas
       "age": 1
     }
     """
-    Entonces El código de respuesta debe ser 201
-    Y El response debe contener un campo 'id' con formato UUID
+    Then the response code should be 201
+    And the response should contain a field 'id' with UUID format
 
-  Escenario: Registrar un perro con campos insuficientes
-    Dado que se tienen los siguientes headers
+  Scenario: Register a dog with insufficient fields
+    Given the following headers
       | Header        | Value              |
       | Content-Type  | application/json   |
-    Cuando Se registra una nueva mascota
+    When a new pet is registered
     """
     {
       "name": "Rover",
       "species": "DOG"
     }
     """
-    Entonces El código de respuesta debe ser 400
+    Then the response code should be 400
 
-  Escenario: Registrar una nueva mascota de una especie no válida
-    Dado que se tienen los siguientes headers
+  Scenario: Register a new pet of an invalid species
+    Given the following headers
       | Header        | Value              |
       | Content-Type  | application/json   |
-    Cuando Se registra una nueva mascota
+    When a new pet is registered
     """
     {
       "name": "Unknown",
@@ -110,13 +110,13 @@ Característica: Registro de mascotas
       "age": 4
     }
     """
-    Entonces El código de respuesta debe ser 400
+    Then the response code should be 400
 
-  Escenario: Registrar una nueva mascota con un nombre muy largo
-    Dado que se tienen los siguientes headers
+  Scenario: Register a new pet with a very long name
+    Given the following headers
       | Header        | Value              |
       | Content-Type  | application/json   |
-    Cuando Se registra una nueva mascota
+    When a new pet is registered
     """
     {
       "name": "ThisIsAVeryLongNameThatExceedsTheAllowedLengthForTestingPurposes very very very long ...hisIsAVeryLongNameThatExceedsTheAllowedLengthForTestingPurposes very very very long ...",
@@ -125,13 +125,13 @@ Característica: Registro de mascotas
       "age": 2
     }
     """
-    Entonces El código de respuesta debe ser 400
+    Then the response code should be 400
 
-  Escenario: Registrar una nueva mascota con una edad negativa
-    Dado que se tienen los siguientes headers
+  Scenario: Register a new pet with a negative age
+    Given the following headers
       | Header        | Value              |
       | Content-Type  | application/json   |
-    Cuando Se registra una nueva mascota
+    When a new pet is registered
     """
     {
       "name": "Tiny",
@@ -140,4 +140,4 @@ Característica: Registro de mascotas
       "age": -1
     }
     """
-    Entonces El código de respuesta debe ser 400
+    Then the response code should be 400

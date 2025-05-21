@@ -2,10 +2,10 @@ package io.zutun.samples.it.steps;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.es.Cuando;
-import io.cucumber.java.es.Dado;
-import io.cucumber.java.es.Entonces;
-import io.cucumber.java.es.Y;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +22,7 @@ public class ApiSteps {
     @Autowired
     private ApiClient apiClient;
 
-    @Entonces("El código de respuesta debe ser {int}")
+    @Then("the response code should be {int}")
     public void theStatusCodeShouldBe(Integer statusCode) {
         apiClient
                 .getResponse()
@@ -30,7 +30,7 @@ public class ApiSteps {
                 .statusCode(statusCode);
     }
 
-    @Entonces("El campo {string} de la respuesta debe ser {string}")
+    @Then("the field {string} of the response should be {string}")
     public void bodyResponsePropertyIsEqualTo(String path, String value) {
         apiClient
                 .getResponse()
@@ -38,31 +38,32 @@ public class ApiSteps {
                 .body(path, equalTo(value));
     }
 
-    @Cuando("Se verifica la salud de la aplicación")
+    @When("the application health is verified")
     public void verifyApplicationHealth() {
         apiClient.performRequest(GET, "/actuator/health");
     }
 
-    @Dado("que se tienen los siguientes headers")
+    @Given("the following headers")
     public void withHeaders(DataTable headers) {
         headers.asMap(String.class, String.class).forEach(apiClient::withHeader);
     }
 
-    @Cuando("Se registra una nueva mascota")
+    @When("a new pet is registered")
     public void registerNewPet(JsonNode jsonPayload) {
         apiClient.withJsonPayload(jsonPayload.toString());
         apiClient.performRequest(POST, "/v1/pets");
     }
 
-    @Y("El response debe contener un campo {string} con formato UUID")
+    @And("the response should contain a field {string} with UUID format")
     public void fielShouldHaveFormatUUID(String field) {
         apiClient.getResponse()
                 .then()
                 .body(field, matchesPattern("^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"));
     }
 
-    @Cuando("Se busca una mascota con ID {string}")
+    @When("a pet is searched by ID {string}")
     public void searchPetById(String id) {
         apiClient.performRequest(GET, "/v1/pets/" + id);
     }
+
 }

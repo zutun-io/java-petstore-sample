@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import static java.util.Objects.requireNonNull;
 import static lombok.AccessLevel.PROTECTED;
@@ -30,6 +31,11 @@ public abstract class Pet extends AbstractAuditable {
         this.name = requireNonNull(name);
         this.breed = requireNonNull(breed);
         this.birthDate = requireNonNull(birthDate);
+    }
+
+    //method to get the current age
+    public Period getAge() {
+        return Period.between(birthDate, LocalDate.now());
     }
 
 }
